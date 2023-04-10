@@ -18,7 +18,9 @@ other entities in the system:
 
 Billers can create products which are forms that contain fields and also contain prices.
 
-The application also sets fee rates which effects the calculation of each transaction.
+When a customer buys a product a transaction is made.
+
+The application also sets fee rates which affects the calculation of each transaction.
 
 ## Technical Overview
 
