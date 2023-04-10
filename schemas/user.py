@@ -4,8 +4,8 @@ class UserSchema(Schema):
     id = fields.Int()
     uuid = fields.UUID()
 
-    username = fields.Str()
-    password = fields.Str()
+    username = fields.Str(required=True)
+    password = fields.Str(required=True)
     email = fields.Str()
 
     first_name = fields.Str()
