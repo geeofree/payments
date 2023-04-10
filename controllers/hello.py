@@ -1,7 +1,8 @@
 from flask import Blueprint
+from utils.http import json_response
 
 controller = Blueprint('hello', __name__)
 
 @controller.route('/')
 def index():
-    return '<h1>Hello world!</h1>'
+    return json_response('Hello world!')
