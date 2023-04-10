@@ -17,5 +17,5 @@ class User(BaseModel):
     last_name = mapped_column(sa.String(64))
     date_of_birth = mapped_column(sa.Date)
 
-    created_at = mapped_column(sa.DateTime)
-    updated_at = mapped_column(sa.DateTime)
+    created_at = mapped_column(sa.DateTime, server_default=sa.sql.func.now())
+    updated_at = mapped_column(sa.DateTime, onupdate=sa.sql.func.now())
