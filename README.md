@@ -6,13 +6,23 @@ A toy web application for a payments service system.
 
 ### Users
 
-The application contains three (3) user types that drives interactions with 
-other entities in the system:
+The application contains four (4) user types that drives the interaction 
+with other entities in the system and are grouped as follows:
 
-1. Administrator - Manages users and system configurations; has read/write access to roles, 
-   users, and system configurations.
-2. Biller - Manages products that will be sold to customers.
-3. Customer - Product consumer.
+#### Management
+
+Management users handle anything thats related to users in the system.
+
+- Master: The master user manages administrator users as well as the 
+  system configurations.
+- Administrator: Manages *client* users.
+
+#### Client
+
+Client users interact with products and create transactions in the system.
+
+- Biller: Manages products that will be sold to customers.
+- Customer: Product consumer.
 
 ### Products & Transactions
 
