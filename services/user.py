@@ -1,13 +1,23 @@
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 from schemas.user import UserSchema
 from models.user import User
 from database import engine
 
-def create_user(user):
-    with Session(engine) as session:
-        user['password'] = generate_password_hash(user['password'])
-        new_user = User(**user)
-        session.add(new_user)
-        session.commit()
-        return UserSchema(exclude=('created_at', 'id', 'password')).dump(new_user)
+class UserService:
+    @staticmethod
+    def create(user):
+        with Session(engine) as session:
+            user['password'] = generate_password_hash(user['password'])
+            new_user = User(**user)
+            session.add(new_user)
+            session.commit()
+            return UserSchema(exclude=('id', 'password', 'created_at')).dump(new_user)
+
+    @staticmethod
+    def validate_user(username, password):
+        with Session(engine) as session:
+            user = session.scalars(select(User).where(User.username == username)).first()
+            if user and check_password_hash(user.password, password):
+                return UserSchema(exclude=('id', 'password')).dump(user)

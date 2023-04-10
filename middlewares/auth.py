@@ -1,6 +1,6 @@
 from flask import session, request, current_app
 from utils.http import json_response
-import services.auth as auth_service
+from services.auth import AuthService
 import jwt
 
 def validate_token():
@@ -18,7 +18,7 @@ def validate_token():
         if scheme.lower() != "bearer":
             return json_response("Authorization header only accepts 'Bearer' scheme", 400)
 
-        auth_service.set_user_session(token)
+        AuthService.set_user_session(token)
     except jwt.DecodeError as decode_error:
         return json_response("Could not decode token: {}".format(decode_error), 406)
     except jwt.ExpiredSignatureError:
