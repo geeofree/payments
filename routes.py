@@ -1,5 +1,5 @@
 from flask import Blueprint
-from middlewares.auth import validate_token
+from middlewares.auth import AuthMiddleware
 import controllers.auth as auth
 import controllers.users as users
 
@@ -15,7 +15,7 @@ def register(app):
     api = Blueprint('api', __name__, url_prefix='/api/v1')
 
     # Middlewares
-    api.before_request(validate_token)
+    api.before_request(AuthMiddleware.validate_token)
 
     # Controllers
     api.register_blueprint(users.controller)
