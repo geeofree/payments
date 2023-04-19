@@ -11,4 +11,4 @@ def sign_in():
     if token == None:
         return json_response('Invalid credentials. Please try again.', 400)
 
-    return json_response('Sign-in successful!', token)
+    return json_response('Sign-in successful!', data=token)
