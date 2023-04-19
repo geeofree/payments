@@ -4,7 +4,7 @@ from utils.http import json_response
 
 controller = Blueprint('auth', __name__)
 
-@controller.route("sign-in")
+@controller.route("sign-in", methods=['POST'])
 def sign_in():
     token = AuthService.create_token(request.json)
 
