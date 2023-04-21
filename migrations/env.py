@@ -1,6 +1,5 @@
-from dotenv import dotenv_values
 from logging.config import fileConfig
-
+from dotenv import dotenv_values
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
@@ -11,8 +10,9 @@ from alembic import context
 config = context.config
 
 # Set values from environment
-dotenv = dotenv_values()
-config.set_main_option('sqlalchemy.url', dotenv['FLASK_DB_CONNECTION'])
+if config.get_main_option('sqlalchemy.url') is None:
+    dotenv = dotenv_values()
+    config.set_main_option('sqlalchemy.url', dotenv['FLASK_DB_CONNECTION'])
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
