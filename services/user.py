@@ -9,8 +9,9 @@ class UserService:
     @staticmethod
     def create(user):
         with Session(db.engine) as session:
-            user['password'] = generate_password_hash(user['password'])
-            new_user = User(**user)
+            hashed_password = generate_password_hash(user['password'])
+            new_user_payload = { **user, 'password': hashed_password }
+            new_user = User(**new_user_payload)
             session.add(new_user)
             session.commit()
             return UserSchema(exclude=('id', 'password', 'created_at')).dump(new_user)
