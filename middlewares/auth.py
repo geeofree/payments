@@ -20,7 +20,7 @@ class AuthMiddleware:
             if scheme.lower() != "bearer":
                 return json_response("Authorization header only accepts 'Bearer' scheme", 400)
 
-            AuthService.set_user_session(token)
+            AuthService.decode_token(token)
         except jwt.DecodeError as decode_error:
             return json_response("Could not decode token: {}".format(decode_error), 406)
         except jwt.ExpiredSignatureError:

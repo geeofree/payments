@@ -1,4 +1,4 @@
-from flask import current_app, session
+from flask import current_app
 from datetime import datetime, timezone, timedelta
 from services.user import UserService
 import jwt
@@ -21,6 +21,5 @@ class AuthService:
         return token
 
     @staticmethod
-    def set_user_session(token):
-        user = jwt.decode(token, current_app.config['JWT_SECRET'], algorithms=current_app.config['JWT_ENCODING_ALG'])
-        session['user'] = user
+    def decode_token(token):
+        return jwt.decode(token, current_app.config['JWT_SECRET'], algorithms=current_app.config['JWT_ENCODING_ALG'])
