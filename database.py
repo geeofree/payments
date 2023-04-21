@@ -1,4 +1,10 @@
-from dotenv import dotenv_values
 from sqlalchemy import create_engine
-dotenv = dotenv_values()
-engine = create_engine(dotenv['FLASK_DB_CONNECTION'], echo=True)
+
+class Database:
+    engine = None
+
+    def init_engine(self, connection_string):
+        if self.engine is None:
+            self.engine = create_engine(connection_string)
+
+db = Database()
