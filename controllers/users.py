@@ -7,13 +7,13 @@ controller = Blueprint('users', __name__, url_prefix='/users')
 @controller.route('/me')
 def current_user():
     """
-    /api/v1/users/me
+    :uri_path: /api/v1/users/me
 
-    Response with the user claims from the decoded token.
+    Endpoint for returning the current user from the JWT token.
 
     This controller assumes that the token will be validated before 
-    it handles the request, therefore it assumes that the token is 
-    always a valid token.
+    it handles the request; it assumes that the JWT token is 
+    always valid.
     """
     authorization = request.headers.get("authorization")
     token = authorization.split()[1]

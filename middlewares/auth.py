@@ -7,7 +7,21 @@ class AuthMiddleware:
     @staticmethod
     def validate_token():
         """
-        Validates the bearer token and sets the current user session.
+        Validates the bearer token in the request header.
+
+        :return: Returns a JSON response if there are errors during token decoding:
+
+                 - No Authorization Header: If the request has no Authorization header, 
+                   return a 400 JSON response.
+
+                 - Not 'Bearer' Schema: If the Authorization header isn't using the 'Bearer' 
+                   schema, return a 400 JSON response.
+
+                 - No Token: If no token is provided, return a 400 JSON response.
+
+                 - Malformed Token: If the token is malformed, return a 406 JSON response.
+
+                 - Expired Token: If the token has expired, return a 406 JSON response.
         """
         authorization = request.headers.get("authorization")
 
