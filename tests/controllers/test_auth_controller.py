@@ -11,6 +11,7 @@ def test_it_responds_with_an_access_token(client):
     """
     new_user = { 'username': 'lexie', 'password': 'password' }
     UserService.create(new_user)
+
     response = client.post('/api/auth/sign-in', json=new_user)
 
     assert type(response.json['data']) is str
@@ -32,6 +33,7 @@ def test_that_username_and_password_fields_are_required(client):
     """
     new_user = { 'username': 'lexie', 'password': 'password' }
     UserService.create(new_user)
+
     response = client.post('/api/auth/sign-in', json={})
 
     assert response.json['status'] == 406
@@ -61,6 +63,7 @@ def test_that_username_and_password_fields_are_strings(client):
     """
     new_user = { 'username': 'lexie', 'password': 'password' }
     UserService.create(new_user)
+
     response = client.post('/api/auth/sign-in', json={ 'username': 1, 'password': True })
 
     assert response.json['status'] == 406
