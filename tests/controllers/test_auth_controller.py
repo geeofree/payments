@@ -10,7 +10,7 @@ def test_it_responds_with_an_access_token(client):
     3. It should have a response status code of 200.
     """
     new_user = { 'username': 'lexie', 'password': 'password' }
-    UserService.create(new_user)
+    UserService.create_user(new_user)
 
     response = client.post('/api/auth/sign-in', json=new_user)
 
@@ -32,7 +32,7 @@ def test_that_username_and_password_fields_are_required(client):
        in the JSON payload.
     """
     new_user = { 'username': 'lexie', 'password': 'password' }
-    UserService.create(new_user)
+    UserService.create_user(new_user)
 
     response = client.post('/api/auth/sign-in', json={})
 
@@ -62,7 +62,7 @@ def test_that_username_and_password_fields_are_strings(client):
        string values in the JSON payload.
     """
     new_user = { 'username': 'lexie', 'password': 'password' }
-    UserService.create(new_user)
+    UserService.create_user(new_user)
 
     response = client.post('/api/auth/sign-in', json={ 'username': 1, 'password': True })
 

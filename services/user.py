@@ -6,7 +6,7 @@ from database import db
 
 class UserService:
     @staticmethod
-    def create(user):
+    def create_user(user):
         with db.engine.connect() as conn:
             user = user.copy()
             user['password'] = generate_password_hash(user['password'])
