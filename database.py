@@ -1,7 +1,9 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, MetaData
 
 class Database:
-    engine = None
+    def __init__(self):
+        self.engine = None
+        self.metadata = MetaData()
 
     def init_engine(self, connection_string):
         if self.engine is None:

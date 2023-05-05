@@ -25,8 +25,8 @@ def upgrade() -> None:
 
         # Account details
         sa.Column('username', sa.String(64), nullable=False, unique=True),
-        sa.Column('password', sa.String, nullable=False, unique=True),
-        sa.Column('email', sa.String, unique=True),
+        sa.Column('password', sa.String, nullable=False),
+        sa.Column('email', sa.String),
 
         # Personal details
         sa.Column('first_name', sa.String(64)),
