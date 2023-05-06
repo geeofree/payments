@@ -1,21 +1,29 @@
-from uuid import uuid4
+from sqlalchemy.orm import mapped_column, relationship
 import sqlalchemy as sa
-from database import db
+from uuid import uuid4
+from . import BaseModel
+from .user_role import UserRole
+from .role import Role
 
-User = sa.Table(
-    'users',
-    db.metadata,
-    sa.Column("id", sa.Integer, primary_key=True),
-    sa.Column("uuid", sa.Uuid, nullable=False, unique=True, default=uuid4),
+class User(BaseModel):
+    __tablename__ = 'users'
 
-    sa.Column("username", sa.String(64), nullable=False, unique=True),
-    sa.Column("password", sa.String, nullable=False),
-    sa.Column("email", sa.String),
+    id = mapped_column(sa.Integer, primary_key=True)
+    uuid = mapped_column(sa.Uuid, nullable=False, unique=True, default=uuid4)
 
-    sa.Column("first_name", sa.String(64)),
-    sa.Column("last_name", sa.String(64)),
-    sa.Column("date_of_birth", sa.Date),
+    username = mapped_column(sa.String(64), nullable=False, unique=True)
+    password = mapped_column(sa.String, nullable=False)
+    email = mapped_column(sa.String)
 
-    sa.Column("created_at", sa.DateTime, server_default=sa.sql.func.now()),
-    sa.Column("updated_at", sa.DateTime, onupdate=sa.sql.func.now()),
-)
+    first_name = mapped_column(sa.String(64))
+    last_name = mapped_column(sa.String(64))
+    date_of_birth = mapped_column(sa.Date)
+
+    roles = relationship(Role, secondary=UserRole)
+
+    created_at = mapped_column(sa.DateTime, server_default=sa.sql.func.now())
+    updated_at = mapped_column(sa.DateTime, onupdate=sa.sql.func.now())
+
+    def __repr__(self):
+        return "<User(uuid={}, username={}, created_at={}, updated_at={})>".\
+            format(self.uuid, self.username, self.created_at, self.updated_at)
