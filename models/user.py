@@ -1,11 +1,11 @@
 from sqlalchemy.orm import mapped_column, relationship
 import sqlalchemy as sa
 from uuid import uuid4
-from . import BaseModel
+from .base import Base
 from .user_role import UserRole
 from .role import Role
 
-class User(BaseModel):
+class User(Base):
     __tablename__ = 'users'
 
     id = mapped_column(sa.Integer, primary_key=True)

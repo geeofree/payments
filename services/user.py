@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from schemas.user import UserSchema
-from models.user import User
+from schemas import UserSchema
+from models import User
 from database import db
 
 class UserService:

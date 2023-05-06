@@ -1,5 +1,5 @@
 from flask import Blueprint, session, request
-from services.auth import AuthService
+from services import AuthService
 from utils.http import json_response
 
 controller = Blueprint('users', __name__, url_prefix='/users')

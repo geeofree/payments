@@ -1,6 +1,6 @@
 from database import db
-from models.role import Role
-from schemas.role import RoleSchema
+from models import Role
+from schemas import RoleSchema
 
 class RoleService:
     @staticmethod

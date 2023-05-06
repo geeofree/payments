@@ -1,9 +1,9 @@
 import sqlalchemy as sa
-from . import BaseModel
+from .base import Base
 
 UserRole = sa.Table(
     "user_roles",
-    BaseModel.metadata,
+    Base.metadata,
     sa.Column("user_id", sa.Integer, sa.ForeignKey("users.id"), nullable=False),
     sa.Column("role_id", sa.Integer, sa.ForeignKey("roles.id"), nullable=False),
 

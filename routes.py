@@ -1,5 +1,5 @@
 from flask import Blueprint
-from middlewares.auth import AuthMiddleware
+from middlewares import AuthMiddleware
 import controllers.auth as auth
 import controllers.users as users
 

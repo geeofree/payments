@@ -1,6 +1,6 @@
 from flask import session, request, current_app
 from utils.http import json_response
-from services.auth import AuthService
+from services import AuthService
 import jwt
 
 class AuthMiddleware:

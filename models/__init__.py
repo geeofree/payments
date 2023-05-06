@@ -1,4 +1,3 @@
-from sqlalchemy.orm import DeclarativeBase
-
-class BaseModel(DeclarativeBase):
-    pass
+from .user import User
+from .role import Role
+from .user_role import UserRole

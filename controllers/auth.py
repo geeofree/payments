@@ -1,7 +1,7 @@
 from flask import Blueprint, request
-from services.auth import AuthService
-from middlewares.validation import ValidationMiddleware
-from schemas.validation.auth import AuthValidationSchema
+from services import AuthService
+from middlewares import ValidationMiddleware
+from schemas.validation import AuthValidationSchema
 from utils.http import json_response
 
 controller = Blueprint('auth', __name__)

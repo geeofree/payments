@@ -1,9 +1,9 @@
 from sqlalchemy.orm import mapped_column, relationship
 from uuid import uuid4
 import sqlalchemy as sa
-from . import BaseModel
+from .base import Base
 
-class Role(BaseModel):
+class Role(Base):
     __tablename__ = 'roles'
 
     id = mapped_column(sa.Integer, primary_key=True)

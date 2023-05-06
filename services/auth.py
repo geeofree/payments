@@ -1,6 +1,6 @@
 from flask import current_app
 from datetime import datetime, timezone, timedelta
-from services.user import UserService
+from .user import UserService
 import jwt
 
 class AuthService:
