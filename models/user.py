@@ -2,8 +2,6 @@ from sqlalchemy.orm import mapped_column, relationship
 import sqlalchemy as sa
 from uuid import uuid4
 from .base import Base
-from .user_role import UserRole
-from .role import Role
 
 class User(Base):
     __tablename__ = 'users'
@@ -19,7 +17,7 @@ class User(Base):
     last_name = mapped_column(sa.String(64))
     date_of_birth = mapped_column(sa.Date)
 
-    roles = relationship(Role, secondary=UserRole)
+    roles = relationship("Role", secondary="user_roles")
 
     created_at = mapped_column(sa.DateTime, server_default=sa.sql.func.now())
     updated_at = mapped_column(sa.DateTime, onupdate=sa.sql.func.now())
