@@ -12,7 +12,7 @@ class UserService:
             new_user = User(**user)
             session.add(new_user)
             session.commit()
-            return UserSchema(exclude=('id', 'password')).dump(new_user)
+            return UserSchema().dump(new_user)
 
 
     @staticmethod
@@ -20,4 +20,4 @@ class UserService:
         with db.session as session:
             user = session.query(User).filter(User.username == username).first()
             if user and check_password_hash(user.password, password):
-                return UserSchema(exclude=('id', 'password')).dump(user)
+                return UserSchema().dump(user)
