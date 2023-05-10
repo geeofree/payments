@@ -2,6 +2,7 @@ from utils.exceptions import EmptyPackagesException
 from flask.cli import AppGroup
 from flask import current_app
 from importlib import import_module
+from datetime import datetime, timezone
 import click
 import os
 
@@ -10,8 +11,8 @@ db_cli = AppGroup('db')
 _SEEDERS_DIRNAME = "seeds"
 
 @db_cli.command('seed')
-@click.argument('seed_name')
-def seed(seed_name):
+@click.argument('seeder_name')
+def seed(seeder_name):
     seeds_dir = os.path.join(current_app.root_path, _SEEDERS_DIRNAME)
 
     if not os.path.exists(seeds_dir):
@@ -22,7 +23,8 @@ def seed(seed_name):
             file.write("")
             print("Generated __init__ file for seeds directory: {}".format(seeds_dir_init_file))
 
-    seed_file = os.path.join(seeds_dir, seed_name + ".py")
+    unix_ts = str(datetime.now(timezone.utc).timestamp()).replace('.', '_')
+    seed_file = os.path.join(seeds_dir, "{}_{}.py".format(unix_ts, seeder_name))
 
     if os.path.exists(seed_file):
         raise FileExistsError("Seed file already exists: {}".format(seed_file))
