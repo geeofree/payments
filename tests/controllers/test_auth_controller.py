@@ -1,4 +1,4 @@
-from services.user import UserService
+from factories import UserFactory
 
 def test_it_responds_with_an_access_token(client):
     """
@@ -10,7 +10,7 @@ def test_it_responds_with_an_access_token(client):
     3. It should have a response status code of 200.
     """
     new_user = { 'username': 'lexie', 'password': 'password' }
-    UserService.create_user(new_user)
+    UserFactory().create(username=new_user["username"])
 
     response = client.post('/api/auth/sign-in', json=new_user)
 
@@ -18,6 +18,26 @@ def test_it_responds_with_an_access_token(client):
     assert response.json['message'] == "Sign-in successful!"
     assert response.json['status'] == 200
     assert response.status_code == 200
+
+
+def test_it_responds_with_invalid_credentials(client):
+    """
+    The sign-in endpoint should return a response where
+    the user has provided an invalid credential.
+
+    1. It should have a response status code of 400.
+    2. It should have a `message` with "Invalid credentials. Please try again."
+    """
+    new_user = UserFactory().create()
+
+    response = client.post('/api/auth/sign-in', json={
+        "username": new_user.username,
+        "password": "Incorrect password."
+    })
+
+    assert response.status_code == 400
+    assert response.json['status'] == 400
+    assert response.json['message'] == "Invalid credentials. Please try again."
 
 
 def test_that_username_and_password_fields_are_required(client):
@@ -31,9 +51,6 @@ def test_that_username_and_password_fields_are_required(client):
     3. It should state that username and password fields are required 
        in the JSON payload.
     """
-    new_user = { 'username': 'lexie', 'password': 'password' }
-    UserService.create_user(new_user)
-
     response = client.post('/api/auth/sign-in', json={})
 
     assert response.json['status'] == 406
@@ -61,9 +78,6 @@ def test_that_username_and_password_fields_are_strings(client):
     3. It should state that username and password fields must be
        string values in the JSON payload.
     """
-    new_user = { 'username': 'lexie', 'password': 'password' }
-    UserService.create_user(new_user)
-
     response = client.post('/api/auth/sign-in', json={ 'username': 1, 'password': True })
 
     assert response.json['status'] == 406
