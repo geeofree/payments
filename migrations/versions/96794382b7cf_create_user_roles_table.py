@@ -20,8 +20,8 @@ def upgrade() -> None:
     op.create_table(
         "user_roles",
         # Identifiers
-        sa.Column('user_id', sa.Integer, sa.ForeignKey('users.id'), nullable=False),
-        sa.Column('role_id', sa.Integer, sa.ForeignKey('roles.id'), nullable=False),
+        sa.Column('user_id', sa.Integer, sa.ForeignKey('users.id', ondelete="CASCADE"), nullable=False),
+        sa.Column('role_id', sa.Integer, sa.ForeignKey('roles.id', ondelete="CASCADE"), nullable=False),
 
         # Timestamps
         sa.Column('created_at', sa.DateTime, server_default=sa.sql.func.now()),
