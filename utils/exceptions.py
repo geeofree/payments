@@ -1,0 +1,2 @@
+class EmptyPackagesException(Exception):
+    pass
