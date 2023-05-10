@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, MetaData
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import sessionmaker
 
 class Database:
     def __init__(self):
@@ -11,7 +11,7 @@ class Database:
     def init_engine(self, connection_string, **kwargs):
         if self.engine is None:
             self.engine = create_engine(connection_string, **kwargs)
-            self.session = Session(self.engine)
+            self.session = sessionmaker(self.engine)
 
 
 db = Database()

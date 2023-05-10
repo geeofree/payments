@@ -1,11 +1,9 @@
 from utils.exceptions import NonPositiveException
-from sqlalchemy.orm import Session
 from sqlalchemy import insert
 from database import db
 from faker import Faker
 
 _fake = Faker()
-_factory_session = Session(db.engine, expire_on_commit=False)
 
 class Factory:
     def __new__(cls, **kwargs):
@@ -34,7 +32,7 @@ class Factory:
 
 
     def create(self, **kwargs):
-        with _factory_session as session:
+        with db.session(expire_on_commit=False) as session:
             attributes = self.define_attributes()
 
             if self._count < 2:
@@ -48,11 +46,12 @@ class Factory:
             if optimized:
                 records = session.execute(insert(self._model), [self.define_attributes() for _ in range(self._count)])
                 session.commit()
-            else:
-                records = [self._model(**self._get_attributes(**kwargs)) for _ in range(self._count)]
-                session.add_all(records)
-                session.commit()
-                return records
+                return
+
+            records = [self._model(**self._get_attributes(**kwargs)) for _ in range(self._count)]
+            session.add_all(records)
+            session.commit()
+            return records
 
 
     def _get_attributes(self, **kwargs):

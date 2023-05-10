@@ -10,7 +10,7 @@ _DEFAULT_ROLES = [
 ]
 
 def seed_up():
-   with db.session as session:
+   with db.session() as session:
         count_roles_stmt = select(func.count(Role.id)).where(Role.name.in_([role["name"] for role in _DEFAULT_ROLES]))
         (total_roles,) = session.execute(count_roles_stmt).first()
 
