@@ -14,7 +14,7 @@ def seed_up():
         count_roles_stmt = select(func.count(Role.id)).where(Role.name.in_([role["name"] for role in _DEFAULT_ROLES]))
         (total_roles,) = session.execute(count_roles_stmt).first()
 
-        if total_roles != len(_DEFAULT_ROLES):
+        if total_roles == 0:
             session.execute(insert(Role), _DEFAULT_ROLES)
             session.commit()
 
