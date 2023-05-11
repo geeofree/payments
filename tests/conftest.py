@@ -6,19 +6,19 @@ import pytest
 
 load_dotenv()
 
+_in_memory_db = "sqlite:///test.db"
+_alembic_config = AlembicConfig("alembic.ini")
+_alembic_config.set_main_option("sqlalchemy.url", _in_memory_db)
+
 @pytest.fixture
-def app():
-    in_memory_db = "sqlite:///test.db"
-    alembic_config = AlembicConfig("alembic.ini")
-    alembic_config.set_main_option("sqlalchemy.url", in_memory_db)
+def db_connection():
+    alembic_command.upgrade(_alembic_config, "head")
+    yield _in_memory_db
+    alembic_command.downgrade(_alembic_config, "base")
 
-    app = create_app(db_connection=in_memory_db)
-
-    @app.teardown_appcontext
-    def db_teardown(exception):
-        alembic_command.downgrade(alembic_config, "base")
-
-    alembic_command.upgrade(alembic_config, "head")
+@pytest.fixture
+def app(db_connection):
+    app = create_app(db_connection=db_connection)
     return app
 
 @pytest.fixture
