@@ -33,8 +33,6 @@ class Factory:
 
     def create(self, **kwargs):
         with db.session(expire_on_commit=False) as session:
-            attributes = self.define_attributes()
-
             if self._count < 2:
                 record = self._model(**self._get_attributes(**kwargs))
                 session.add(record)

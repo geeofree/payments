@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash
 from models import User
-from .base import Factory
+from .factory import Factory
 
 class UserFactory(Factory):
     model = User

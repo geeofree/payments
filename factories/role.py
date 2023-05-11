@@ -1,4 +1,4 @@
-from .base import Factory
+from .factory import Factory
 from models import Role
 
 class RoleFactory(Factory):
