@@ -1,4 +1,4 @@
-from flask import current_app
+from flask import current_app, g
 from datetime import datetime, timezone, timedelta
 from .user import UserService
 import jwt
@@ -23,3 +23,16 @@ class AuthService:
     @staticmethod
     def decode_token(token):
         return jwt.decode(token, current_app.config['JWT_SECRET'], algorithms=current_app.config['JWT_ENCODING_ALG'])
+
+
+    @staticmethod
+    def has_role(role):
+        return role in g.user.get("user", {}).get("roles")
+
+
+    @staticmethod
+    def get_subordinate_role():
+        if AuthService.has_role("master"):
+            return "admin"
+        elif AuthService.has_role("admin"):
+            return "biller"

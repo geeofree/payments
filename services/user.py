@@ -1,15 +1,16 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from schemas import UserSchema
-from models import User
+from models import User, Role
 from database import db
 
 class UserService:
     @staticmethod
-    def create_user(user):
+    def create_user(**user):
         with db.session() as session:
-            user = user.copy()
-            user['password'] = generate_password_hash(user['password'])
-            new_user = User(**user)
+            user["password"] = generate_password_hash(user["password"])
+            role = user.pop("role", "customer")
+            roles = session.query(Role).filter(Role.name == role).all()
+            new_user = User(**user, roles=roles)
             session.add(new_user)
             session.commit()
             return UserSchema().dump(new_user)
