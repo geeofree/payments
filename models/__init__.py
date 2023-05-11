@@ -1,3 +1,4 @@
 from .user import User
 from .role import Role
-from .user_role import UserRole
+from .ability import Ability
+from .role_ability import role_ability

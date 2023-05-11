@@ -6,7 +6,7 @@ from .create_roles import _DEFAULT_ROLES
 import random
 
 def _get_random_role(roles):
-    return { "roles": [random.choice(roles)] }
+    return { "role": random.choice(roles) }
 
 class CreateRandomUsersSeeder(Seeder):
     @staticmethod
@@ -16,7 +16,7 @@ class CreateRandomUsersSeeder(Seeder):
             roles = session.query(RoleFactory.model).filter(RoleFactory.model.name.in_(roles)).all()
 
         UserFactory()\
-            .count(10)\
+            .count(5)\
             .create_each_with(lambda: _get_random_role(roles))
 
 
