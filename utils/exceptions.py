@@ -4,3 +4,7 @@ class EmptyPackagesException(Exception):
 
 class NonPositiveException(Exception):
     pass
+
+
+class NotEnoughItemsException(Exception):
+    pass

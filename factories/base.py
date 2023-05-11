@@ -1,4 +1,4 @@
-from utils.exceptions import NonPositiveException
+from utils.exceptions import NonPositiveException, NotEnoughItemsException
 from sqlalchemy import insert
 from database import db
 from faker import Faker
@@ -49,6 +49,17 @@ class Factory:
                 return
 
             records = [self._model(**self._get_attributes(**kwargs)) for _ in range(self._count)]
+            session.add_all(records)
+            session.commit()
+            return records
+
+
+    def create_each_with(self, callback):
+        if self._count < 2:
+            raise NotEnoughItemsException("Not enough items to iterate over.")
+
+        with db.session(expire_on_commit=False) as session:
+            records = [self._model(**{ **self.define_attributes(), **callback() }) for _ in range(self._count)]
             session.add_all(records)
             session.commit()
             return records
