@@ -11,7 +11,7 @@ class UserSchema(Schema):
     last_name = fields.Str()
     date_of_birth = fields.Date()
 
-    roles = fields.Pluck(RoleSchema, 'name', many=True)
+    role = fields.Nested(RoleSchema(only=("name", "description", "abilities")))
 
     created_at = fields.DateTime()
     updated_at = fields.DateTime()
